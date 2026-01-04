@@ -1,4 +1,4 @@
-name: Update Unzipped EPG
+name: Update Unzipped EPG (No VOD)
 on:
   schedule:
     - cron: '0 */4 * * *'
