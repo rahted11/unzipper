@@ -1,0 +1,24 @@
+name: Update Unzipped EPG
+on:
+  schedule:
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download and Unzip
+        run: |
+          curl -L "https://raw.githubusercontent.com/ferteque/Curated-M3U-Repository/main/epg20.xml.gz" -o epg20.xml.gz
+          gunzip -f epg20.xml.gz
+
+      - name: Update Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: latest
+          files: epg20.xml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
